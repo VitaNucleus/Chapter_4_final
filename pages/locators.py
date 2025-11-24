@@ -19,3 +19,7 @@ class ProductPageLocators():
 
 class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+
+class BasketPageLocators():
+    BUTTON_TO_PAGE = (By.CSS_SELECTOR, 'div.basket-mini a')
+    TEXT = (By.CSS_SELECTOR, '#content_inner > p')
