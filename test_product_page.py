@@ -25,6 +25,8 @@ class TestUserAddToBasketFromProductPage():
         page.open()
 
         page.should_not_be_success_message()
+
+    @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, browser):
         link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019'
         page = ProductPage(browser, link)
@@ -35,7 +37,7 @@ class TestUserAddToBasketFromProductPage():
         button_add_to_basket.click()
         page.solve_quiz_and_get_code()
         page.should_be_a_added_product()
-
+@pytest.mark.need_review
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
@@ -49,7 +51,6 @@ class TestUserAddToBasketFromProductPage():
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
 def test_guest_can_add_product_to_basket(browser, link):
-    # link = 'http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=newYear2019'
     page = ProductPage(browser, link)
     page.open()
 
@@ -96,6 +97,7 @@ def test_guest_should_see_login_link_on_product_page(browser):
     page.open()
     page.should_be_login_link()
 
+@pytest.mark.need_review
 def test_guest_can_go_to_login_page_from_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/the-city-and-the-stars_95/"
     page = ProductPage(browser, link)
@@ -105,19 +107,16 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     new_page = LoginPage(browser, browser.current_url)
     new_page.should_be_login_page()
 
+@pytest.mark.need_review
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
-    # 1 Открываем страницу
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
     page = ProductPage(browser, link)
     page.open()
 
-    # 2 Переходим в корзину
     page.should_be_basket_link()
     page.go_to_basket_page()
     bascket_page = BasketPage(browser, browser.current_url)
 
-    # 3 Ожидаем, что в корзине нет товаров
     bascket_page.should_be_empty_basket()
 
-    # 4 Ожидаем, что есть текст о том, что корзина пуста
     bascket_page.should_not_be_empty_text_basket()
